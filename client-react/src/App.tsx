@@ -3,10 +3,11 @@ import { Header } from "./components/header";
 import { Home } from "./pages/home";
 import { Register } from "./pages/register";
 import { Login } from "./pages/login";
+import { SessionProvider } from "./hooks/useSession";
 
 export default function App() {
   return (
-    <>
+    <SessionProvider>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -15,6 +16,6 @@ export default function App() {
           <Route path="/log-in" element={<Login />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </SessionProvider>
   )
 }

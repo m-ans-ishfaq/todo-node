@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useSession } from '../hooks/useSession';
 
 export function Register() {
     const [formData, setFormData] = useState({
         fullname: '',
         email: '',
         password: '',
-        avatar: null,
+        avatar: undefined,
     });
+    const { register } = useSession()!;
 
     const handleChange = (e: any) => {
         const { name, value, files } = e.target;
@@ -16,9 +18,11 @@ export function Register() {
         });
     };
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         console.log('Form Data:', formData);
+        const { avatar, email, fullname, password } = formData;
+        const res = await register({email, fullname, password}, avatar);
     };
 
     return (
@@ -70,8 +74,7 @@ export function Register() {
                                 className="form-control" 
                                 id="avatar" 
                                 name="avatar"
-                                onChange={handleChange} 
-                                required 
+                                onChange={handleChange}
                             />
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
